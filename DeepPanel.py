@@ -3,6 +3,8 @@ import tensorflow as tf
 from tensorflow_examples.models.pix2pix import pix2pix
 import multiprocessing
 
+from DeepPanelTest import test_with_model
+
 from metrics import iou_coef, dice_coef, border_acc, content_acc, background_acc, save_model_history_metrics
 from utils import load_data_set, load_image_train, load_image_test, count_files_in_folder, IMAGE_SIZE
 
@@ -112,6 +114,9 @@ if __name__ == "__main__":
                               use_multiprocessing=True,
                               workers=CORES_COUNT,
                               callbacks=[DisplayCallback()])
+
+    test_with_model(model)
+
     print(" - Training finished, saving metrics into ./graphs")
     save_model_history_metrics(EPOCHS, model_history)
     print(" - Training finished, saving model into ./model")

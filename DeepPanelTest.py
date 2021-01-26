@@ -34,19 +34,7 @@ def generate_output_template():
     text_file.write(template_output)
     text_file.close()
 
-
-if __name__ == "__main__":
-    print(" - Loading saved model")
-    tf.random.set_seed(11)
-    custom_objects = {
-        "border_acc": border_acc,
-        "background_acc": background_acc,
-        "content_acc": content_acc,
-        "iou_coef": iou_coef,
-        "dice_coef": dice_coef
-    }
-    model = keras.models.load_model("./model", custom_objects=custom_objects)
-
+def test_with_model(model):
     print(" - Loading test data")
     testing_files_path = "./dataset/test/raw"
     testing_num_files = count_files_in_folder(testing_files_path)
@@ -93,3 +81,17 @@ if __name__ == "__main__":
     print(f"    - Content label = {content_acc}")
     print(f"    - Background label = {background_acc}")
     print(f" - Saving predicted masks as images")
+
+if __name__ == "__main__":
+    print(" - Loading saved model")
+    tf.random.set_seed(11)
+    custom_objects = {
+        "border_acc": border_acc,
+        "background_acc": background_acc,
+        "content_acc": content_acc,
+        "iou_coef": iou_coef,
+        "dice_coef": dice_coef
+    }
+    model = keras.models.load_model("./model", custom_objects=custom_objects)
+    test_with_model(model)
+  
